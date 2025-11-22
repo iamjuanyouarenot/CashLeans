@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary    # o sqlite si prefieres
+python-dotenv
+passlib[bcrypt]
+python-jose[cryptography]
+pydantic
+pytesseract
+Pillow
+email-validator
+python-multipart
