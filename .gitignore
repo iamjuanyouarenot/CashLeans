@@ -1,10 +1,12 @@
 # Python
 Backend/venv/
-__pycache__/
+Backend/__pycache__/
 
 # Node
 frontend/node_modules/
 frontend/dist/
+frontend/.vite/
 
 # Otros
 .DS_Store
+Thumbs.db
