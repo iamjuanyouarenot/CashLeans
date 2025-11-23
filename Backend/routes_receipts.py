@@ -5,9 +5,9 @@ from PIL import Image
 import uuid
 import os
 
-from .database import get_db
-from .auth import get_current_user
-from . import models
+from database import get_db
+from auth import get_current_user
+import models
 
 UPLOAD_DIR = "uploaded_receipts"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -27,12 +27,15 @@ async def upload_receipt(
     file_id = f"{uuid.uuid4()}.png"
     file_path = os.path.join(UPLOAD_DIR, file_id)
 
+    # Guardar archivo subido
     with open(file_path, "wb") as f:
         f.write(await file.read())
 
+    # Procesar texto con OCR
     image = Image.open(file_path)
     text = pytesseract.image_to_string(image, lang="spa")
 
+    # Guardar info en BD
     db_receipt = models.Receipt(
         user_id=current_user.id,
         file_path=file_path,

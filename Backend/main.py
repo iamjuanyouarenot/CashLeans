@@ -1,19 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .database import Base, engine
-from . import models
-from .routes_auth import router as auth_router
-from .routes_transactions import router as tx_router
-from .routes_receipts import router as receipts_router
+from database import Base, engine
+import models
+from routes_auth import router as auth_router
+from routes_transactions import router as tx_router
+from routes_receipts import router as receipts_router
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="CashLeans API")
 
 origins = [
-    "http://localhost:5173",  # Vite
-    "http://localhost:3000",
+    "http://localhost:5173",      # Vite local
+    "http://localhost:3000",      # Otro local
+    "https://TU-FRONTEND.vercel.app",  # <-- pon aquí tu URL real de Vercel
 ]
 
 app.add_middleware(

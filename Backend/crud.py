@@ -1,11 +1,17 @@
 from sqlalchemy.orm import Session
-from . import models, schemas
-from .auth import get_password_hash
+
+import models
+import schemas
+from auth import get_password_hash
 
 
 def create_user(db: Session, user: schemas.UserCreate):
     hashed = get_password_hash(user.password)
-    db_user = models.User(email=user.email, hashed_password=hashed, full_name=user.full_name)
+    db_user = models.User(
+        email=user.email,
+        hashed_password=hashed,
+        full_name=user.full_name
+    )
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -28,4 +34,8 @@ def create_transaction(db: Session, user_id: int, tx: schemas.TransactionCreate)
 
 
 def get_transactions(db: Session, user_id: int):
-    return db.query(models.Transaction).filter(models.Transaction.user_id == user_id).all()
+    return (
+        db.query(models.Transaction)
+        .filter(models.Transaction.user_id == user_id)
+        .all()
+    )

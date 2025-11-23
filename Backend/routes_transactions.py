@@ -2,9 +2,11 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
 
-from . import schemas, crud, models
-from .database import get_db
-from .auth import get_current_user
+import schemas
+import crud
+import models
+from database import get_db
+from auth import get_current_user
 
 router = APIRouter(prefix="/transactions", tags=["transactions"])
 
