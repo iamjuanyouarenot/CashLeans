@@ -1,13 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import DashboardPage from "./pages/DashboardPage";
-import UploadReceiptPage from "./pages/UploadReceiptPage";
-import TransactionsPage from "./pages/TransactionsPage";
-=======
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage.jsx";
@@ -22,8 +13,6 @@ function PrivateRoute({ children }) {
   if (!token) return <Navigate to="/" replace />;
   return children;
 }
->>>>>>> bbfdff6 (Frontend base CashLeans)
-
 export default function App() {
   return (
     <BrowserRouter>
