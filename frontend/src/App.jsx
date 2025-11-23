@@ -1,11 +1,22 @@
-// frontend/src/App.jsx
 import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import DashboardPage from "./pages/DashboardPage";
+import UploadReceiptPage from "./pages/UploadReceiptPage";
+import TransactionsPage from "./pages/TransactionsPage";
 
 export default function App() {
   return (
-    <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-      <h1>Hola CashLeans 🚀</h1>
-      <p>Si ves este texto, el frontend está funcionando.</p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/upload" element={<UploadReceiptPage />} />
+        <Route path="/transactions" element={<TransactionsPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
