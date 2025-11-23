@@ -1,43 +1,39 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { api, setAuthToken } from "../api";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [email, setEmail] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) setAuthToken(token);
+    const savedToken = localStorage.getItem("cashleans_token");
+    const savedEmail = localStorage.getItem("cashleans_email");
+    if (savedToken) setToken(savedToken);
+    if (savedEmail) setEmail(savedEmail);
   }, []);
 
-  const login = async (email, password) => {
-    const formData = new FormData();
-    formData.append("username", email);
-    formData.append("password", password);
-    const res = await api.post("/auth/token", formData);
-    setAuthToken(res.data.access_token);
-    setUser({ email });
-  };
-
-  const register = async (email, fullName, password) => {
-    await api.post("/auth/register", {
-      email,
-      full_name: fullName,
-      password,
-    });
+  const login = (newToken, userEmail) => {
+    setToken(newToken);
+    setEmail(userEmail);
+    localStorage.setItem("cashleans_token", newToken);
+    localStorage.setItem("cashleans_email", userEmail);
   };
 
   const logout = () => {
-    setAuthToken(null);
-    setUser(null);
+    setToken(null);
+    setEmail(null);
+    localStorage.removeItem("cashleans_token");
+    localStorage.removeItem("cashleans_email");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ token, email, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+  return useContext(AuthContext);
+}
